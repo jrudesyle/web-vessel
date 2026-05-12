@@ -2,15 +2,15 @@
   "name": "web-vessel",
   "short_name": "Vessel",
   "description": "Web app wrapper with custom theming",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#0D0D0D",
   "theme_color": "#0D0D0D",
   "icons": [
     {
-      "src": "/icon.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ]
 }
