@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0D0D0D">
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" href="/icon.png">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.png">
   <title>web-vessel - App Launcher</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -203,6 +203,9 @@
   <script type="module">
     import { apps, themes } from './apps.js';
     
+    // GitHub Pages base path detection
+    const basePath = window.location.pathname.includes('/web-vessel') ? '/web-vessel' : '';
+    
     const grid = document.getElementById('apps-grid');
     
     apps.forEach(app => {
@@ -226,7 +229,7 @@
       const app = apps.find(a => a.id === appId);
       if (!app) return;
       
-      const url = `/app.html?url=${encodeURIComponent(app.url)}&theme=${app.theme}&name=${encodeURIComponent(app.name)}`;
+      const url = `${basePath}/app.html?url=${encodeURIComponent(app.url)}&theme=${app.theme}&name=${encodeURIComponent(app.name)}`;
       window.open(url, '_blank');
     };
     
@@ -239,7 +242,7 @@
         return;
       }
       
-      const appUrl = `/app.html?url=${encodeURIComponent(url)}&theme=${theme}&name=Custom`;
+      const appUrl = `${basePath}/app.html?url=${encodeURIComponent(url)}&theme=${theme}&name=Custom`;
       window.open(appUrl, '_blank');
     };
   </script>
