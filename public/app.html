@@ -7,7 +7,7 @@
   <link rel="manifest" href="/manifest.json">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { width: 100%; height: 100%; overflow: hidden; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background: #0D0D0D; }
     #container { width: 100%; height: 100%; border: none; }
     #loader {
       position: fixed;
@@ -32,12 +32,27 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    .warning {
+      background: rgba(255, 165, 0, 0.1);
+      border: 1px solid rgba(255, 165, 0, 0.3);
+      color: #ffa500;
+      padding: 1rem;
+      margin: 1rem;
+      border-radius: 8px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
 <body>
   <div id="loader">
     <div class="loader-spinner"></div>
     <div id="loader-text">Loading...</div>
+    <div class="warning" id="warning" style="display: none;">
+      ⚠️ This site may not load due to CORS/iframe restrictions.<br>
+      For full functionality, run locally with: <code>npm run dev</code>
+    </div>
   </div>
   <iframe id="container"></iframe>
   
@@ -50,19 +65,45 @@
     document.getElementById('app-title').textContent = appName + ' - web-vessel';
     document.getElementById('loader-text').textContent = `Loading ${appName}...`;
     
-    // Load the app via proxy with theme
-    const proxyUrl = `/proxy?url=${encodeURIComponent(targetUrl)}&theme=${theme}`;
+    // On GitHub Pages, we can't proxy, so load directly in iframe
+    // This will fail for many sites due to X-Frame-Options/CSP
     const iframe = document.getElementById('container');
-    iframe.src = proxyUrl;
+    
+    // Inject theme via script (limited without proxy)
+    if (theme !== 'default') {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = `/web-vessel/themes/${theme}.css`;
+      document.head.appendChild(link);
+    }
+    
+    iframe.src = targetUrl;
+    
+    // Show warning if iframe fails to load
+    iframe.addEventListener('error', () => {
+      document.getElementById('warning').style.display = 'block';
+    });
     
     // Hide loader when iframe loads
     iframe.addEventListener('load', () => {
       document.getElementById('loader').style.display = 'none';
+      
+      // Try to inject theme (will fail for cross-origin)
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const link = iframeDoc.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = window.location.origin + `/web-vessel/themes/${theme}.css`;
+        iframeDoc.head.appendChild(link);
+      } catch (e) {
+        console.warn('Cannot inject theme due to CORS:', e);
+        document.getElementById('warning').style.display = 'block';
+      }
     });
     
-    // Register service worker
+    // Service worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
+      navigator.serviceWorker.register('/web-vessel/sw.js');
     }
   </script>
 </body>

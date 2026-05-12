@@ -1,126 +1,79 @@
 # web-vessel
 
-A Progressive Web App (PWA) launcher that wraps any website with custom themes and styling.
+🚢 A Progressive Web App launcher that wraps websites with custom themes.
+
+**Live Demo:** https://jrudesyle.github.io/web-vessel/
 
 ## Features
 
-- 🚀 **App Launcher** - Pre-configured popular apps (Telegram, WhatsApp, Discord, Notion, Gmail, Twitter)
-- 🎨 **Multiple Themes** - Matrix, Dark, Discord-style, Notion-style, Gmail-style, Default
-- 🌐 **Custom URLs** - Launch any website with any theme
-- 🪟 **Multi-Window** - Open multiple apps simultaneously in separate windows
-- 📱 **PWA Support** - Install as standalone app (no Electron/Tauri needed)
-- ⚡ **Zero Client Installs** - Just a browser required
+- 🚀 **App Launcher** - Pre-configured popular apps
+- 🎨 **6 Themes** - Matrix, Dark, Discord, Notion, Gmail, Default
+- 🌐 **Custom URLs** - Launch any website
+- 🪟 **Multi-Window** - Open multiple apps simultaneously
+- 📱 **PWA Support** - Install as standalone app
 
 ## Quick Start
 
+### Option 1: Use Online (Limited)
+
+Visit: **https://jrudesyle.github.io/web-vessel/**
+
+⚠️ **Note:** Many sites block iframe embedding (CORS/CSP). For full functionality, run locally.
+
+### Option 2: Run Locally (Full Features)
+
 ```bash
-cd ~/projects/web-vessel
+git clone https://github.com/jrudesyle/web-vessel.git
+cd web-vessel
 npm install
 npm run dev
 ```
 
 Open: **http://localhost:3030**
 
-## How to Use
+## Why Run Locally?
 
-### 1. Launch Pre-configured Apps
+The **local server** includes a proxy that:
+- ✅ Bypasses CORS/iframe restrictions
+- ✅ Injects custom CSS/JS into any site
+- ✅ Works with Telegram, WhatsApp, Discord, etc.
 
-Click any app card on the launcher:
-- 💬 Telegram (Matrix theme)
-- 📱 WhatsApp (Dark theme)
-- 🎮 Discord (Discord theme)
-- 📝 Notion (Notion theme)
-- ✉️ Gmail (Gmail theme)
-- 🐦 Twitter/X (Dark theme)
-
-### 2. Launch Custom URL
-
-1. Enter any URL in the "Custom URL" section
-2. Select a theme
-3. Click "Launch"
-
-### 3. Multi-Window Support
-
-Each launch opens in a **new window**, so you can:
-- Run Telegram + WhatsApp side-by-side
-- Have multiple themed versions of the same app
-- Keep work/personal accounts separate
+GitHub Pages **cannot proxy**, so many sites won't load there.
 
 ## Themes
 
-| Theme | Description | Best For |
-|-------|-------------|----------|
-| **Matrix** | Green glow, dark background, monospace | Telegram, terminal-style apps |
-| **Dark** | Simple dark mode | Any app |
-| **Discord** | Discord-style gray/blue | Chat apps |
-| **Notion** | Clean white with subtle borders | Productivity apps |
-| **Gmail** | Google Material Design | Google services |
-| **Default** | Minimal, just better scrollbars | Respectful theming |
+| Theme | Description |
+|-------|-------------|
+| **Matrix** | Green glow, dark background, monospace |
+| **Dark** | Simple dark mode |
+| **Discord** | Discord-style gray/blue |
+| **Notion** | Clean white with subtle borders |
+| **Gmail** | Google Material Design |
+| **Default** | Minimal improvements |
+
+## Apps Included
+
+- 💬 Telegram (Matrix theme)
+- 📱 WhatsApp (Dark)
+- 🎮 Discord (Discord)
+- 📝 Notion (Notion)
+- ✉️ Gmail (Gmail)
+- 🐦 Twitter (Dark)
 
 ## Customization
 
-### Add a New App
+See [full documentation](README.md) for:
+- Adding new apps
+- Creating custom themes
+- JavaScript injection
 
-Edit `public/apps.js`:
+## Deploy Your Own
 
-```javascript
-{
-  id: 'slack',
-  name: 'Slack',
-  url: 'https://app.slack.com',
-  icon: '💼',
-  theme: 'dark',
-  description: 'Slack workspace'
-}
-```
+1. Fork this repo
+2. Enable GitHub Pages (Settings → Pages → Source: `main` branch → `/public` folder)
+3. Visit `https://yourusername.github.io/web-vessel/`
 
-### Create a New Theme
-
-1. Create `public/themes/mytheme.css`
-2. Add your CSS (see existing themes for examples)
-3. Add to `public/apps.js` themes object:
-
-```javascript
-export const themes = {
-  // ...
-  mytheme: '/themes/mytheme.css'
-};
-```
-
-### Custom JavaScript
-
-Edit `public/inject.js` to add behavior to all apps:
-
-```javascript
-// Auto-scroll, keyboard shortcuts, etc.
-console.log('Custom JS loaded for', window.location.hostname);
-```
-
-## Deployment
-
-Deploy to any static host (Vercel, Netlify, Cloudflare Pages):
-
-1. Push to GitHub
-2. Connect to your host
-3. Build command: `npm install`
-4. Publish directory: `public`
-5. Start command: `npm start`
-
-Access from anywhere: **https://vessel.yourdomain.com**
-
-## Limitations
-
-- Some sites block iframes/proxying (X-Frame-Options, CSP headers)
-- Login sessions may not persist across reloads for some sites
-- Full native features (dock badges, system notifications) require actual native wrappers
-
-## Use Cases
-
-- ✅ Telegram Web with Matrix theme
-- ✅ Multiple WhatsApp/Telegram accounts
-- ✅ Skinning web apps to match your aesthetic
-- ✅ Quick access to web services without browser tabs
-- ✅ Custom shortcuts and automation via inject.js
+Or deploy to Vercel/Netlify with the Express server for full proxy support.
 
 ## License
 
