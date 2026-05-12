@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="app-title">web-vessel</title>
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html { width: 100%; height: 100%; overflow: hidden; background: #0D0D0D; }
@@ -62,6 +62,9 @@
     const theme = params.get('theme') || 'default';
     const appName = params.get('name') || 'App';
     
+    // GitHub Pages base path detection
+    const basePath = window.location.pathname.includes('/web-vessel') ? '/web-vessel' : '';
+    
     document.getElementById('app-title').textContent = appName + ' - web-vessel';
     document.getElementById('loader-text').textContent = `Loading ${appName}...`;
     
@@ -73,7 +76,7 @@
     if (theme !== 'default') {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = `/web-vessel/themes/${theme}.css`;
+      link.href = `${basePath}/themes/${theme}.css`;
       document.head.appendChild(link);
     }
     
@@ -103,7 +106,7 @@
     
     // Service worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/web-vessel/sw.js');
+      navigator.serviceWorker.register(`${basePath}/sw.js`);
     }
   </script>
 </body>
