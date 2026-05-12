@@ -6,36 +6,242 @@
   <meta name="theme-color" content="#0D0D0D">
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="/icon.png">
-  <title>web-vessel</title>
+  <title>web-vessel - App Launcher</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { width: 100%; height: 100%; overflow: hidden; }
-    #container { width: 100%; height: 100%; border: none; }
-    #loader {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: monospace;
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    
+    .container { max-width: 1200px; margin: 0 auto; }
+    
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      color: #888;
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+    }
+    
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    .app-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 255, 0, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .app-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 255, 0, 0.1) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .app-card:hover {
+      transform: translateY(-4px);
+      border-color: #00ff00;
+      box-shadow: 0 8px 24px rgba(0, 255, 0, 0.2);
+    }
+    
+    .app-card:hover::before {
+      opacity: 1;
+    }
+    
+    .app-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .app-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+    
+    .app-desc {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .app-theme {
+      display: inline-block;
+      background: rgba(0, 255, 0, 0.1);
+      border: 1px solid rgba(0, 255, 0, 0.3);
       color: #00ff00;
-      font-size: 1.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .custom-url-section {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 255, 0, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .custom-url-section h2 {
+      color: #00ff00;
+      margin-bottom: 1rem;
+    }
+    
+    .url-input {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .url-input:focus {
+      outline: none;
+      border-color: #00ff00;
+      box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
+    }
+    
+    .theme-select {
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      margin-right: 1rem;
+    }
+    
+    .launch-btn {
+      padding: 0.75rem 2rem;
+      background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .launch-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 16px rgba(0, 255, 0, 0.4);
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 4rem;
+      color: #555;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <div id="loader">Loading web-vessel...</div>
-  <iframe id="container" src="/proxy?url=https://web.telegram.org/k"></iframe>
+  <div class="container">
+    <h1>🚢 web-vessel</h1>
+    <p class="subtitle">Launch any web app with custom themes</p>
+    
+    <div class="apps-grid" id="apps-grid"></div>
+    
+    <div class="custom-url-section">
+      <h2>Launch Custom URL</h2>
+      <input 
+        type="url" 
+        class="url-input" 
+        id="custom-url" 
+        placeholder="https://example.com"
+      >
+      <select class="theme-select" id="custom-theme">
+        <option value="default">Default Theme</option>
+        <option value="matrix">Matrix</option>
+        <option value="dark">Dark</option>
+        <option value="discord">Discord</option>
+        <option value="notion">Notion</option>
+      </select>
+      <button class="launch-btn" onclick="launchCustom()">Launch</button>
+    </div>
+    
+    <div class="footer">
+      <p>web-vessel • Wrap websites with custom themes • No installs required</p>
+    </div>
+  </div>
   
-  <script>
-    // Hide loader when iframe loads
-    document.getElementById('container').addEventListener('load', () => {
-      document.getElementById('loader').style.display = 'none';
+  <script type="module">
+    import { apps, themes } from './apps.js';
+    
+    const grid = document.getElementById('apps-grid');
+    
+    apps.forEach(app => {
+      if (app.id === 'custom') return; // Skip custom, we have dedicated section
+      
+      const card = document.createElement('div');
+      card.className = 'app-card';
+      card.onclick = () => launchApp(app.id);
+      
+      card.innerHTML = `
+        <div class="app-icon">${app.icon}</div>
+        <div class="app-name">${app.name}</div>
+        <div class="app-desc">${app.description}</div>
+        <span class="app-theme">${app.theme} theme</span>
+      `;
+      
+      grid.appendChild(card);
     });
     
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
-    }
+    window.launchApp = (appId) => {
+      const app = apps.find(a => a.id === appId);
+      if (!app) return;
+      
+      const url = `/app.html?url=${encodeURIComponent(app.url)}&theme=${app.theme}&name=${encodeURIComponent(app.name)}`;
+      window.open(url, '_blank');
+    };
+    
+    window.launchCustom = () => {
+      const url = document.getElementById('custom-url').value;
+      const theme = document.getElementById('custom-theme').value;
+      
+      if (!url) {
+        alert('Please enter a URL');
+        return;
+      }
+      
+      const appUrl = `/app.html?url=${encodeURIComponent(url)}&theme=${theme}&name=Custom`;
+      window.open(appUrl, '_blank');
+    };
   </script>
 </body>
 </html>

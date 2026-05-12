@@ -1,0 +1,65 @@
+/* Notion-style theme */
+
+body {
+  background: #ffffff !important;
+  color: #37352f !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* Sidebar */
+aside, nav, .sidebar {
+  background: #f7f6f3 !important;
+}
+
+/* Main content */
+main, .content {
+  background: #ffffff !important;
+}
+
+/* Cards/Blocks */
+.block, .card, article {
+  background: #ffffff !important;
+  border: 1px solid #e3e2e0 !important;
+  border-radius: 3px !important;
+}
+
+/* Input fields */
+input, textarea {
+  background: #ffffff !important;
+  color: #37352f !important;
+  border: 1px solid #e3e2e0 !important;
+  border-radius: 3px !important;
+}
+
+input:focus, textarea:focus {
+  border-color: #2383e2 !important;
+}
+
+/* Buttons */
+button {
+  background: #2383e2 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 3px !important;
+  padding: 6px 12px !important;
+}
+
+button:hover {
+  background: #0b6bcb !important;
+}
+
+/* Links */
+a {
+  color: #2383e2 !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d3d1cb;
+  border-radius: 6px;
+  border: 3px solid #ffffff;
+}

@@ -1,14 +1,15 @@
 # web-vessel
 
-A Progressive Web App (PWA) that wraps websites with custom CSS/JS injection.
+A Progressive Web App (PWA) launcher that wraps any website with custom themes and styling.
 
 ## Features
 
-- 🌐 Wrap any website as a standalone PWA
-- 🎨 Custom CSS injection (Matrix-style Telegram theme included)
-- ⚡ JavaScript injection support
-- 📱 Works on desktop and mobile
-- 🔒 No client installs required (just a browser)
+- 🚀 **App Launcher** - Pre-configured popular apps (Telegram, WhatsApp, Discord, Notion, Gmail, Twitter)
+- 🎨 **Multiple Themes** - Matrix, Dark, Discord-style, Notion-style, Gmail-style, Default
+- 🌐 **Custom URLs** - Launch any website with any theme
+- 🪟 **Multi-Window** - Open multiple apps simultaneously in separate windows
+- 📱 **PWA Support** - Install as standalone app (no Electron/Tauri needed)
+- ⚡ **Zero Client Installs** - Just a browser required
 
 ## Quick Start
 
@@ -18,42 +19,108 @@ npm install
 npm run dev
 ```
 
-Open: `http://localhost:3030`
+Open: **http://localhost:3030**
 
-## Install as PWA
+## How to Use
 
-1. Visit `http://localhost:3030` in Chrome/Edge
-2. Click the install icon in the address bar
-3. You now have a standalone "app" with Matrix theme!
+### 1. Launch Pre-configured Apps
+
+Click any app card on the launcher:
+- 💬 Telegram (Matrix theme)
+- 📱 WhatsApp (Dark theme)
+- 🎮 Discord (Discord theme)
+- 📝 Notion (Notion theme)
+- ✉️ Gmail (Gmail theme)
+- 🐦 Twitter/X (Dark theme)
+
+### 2. Launch Custom URL
+
+1. Enter any URL in the "Custom URL" section
+2. Select a theme
+3. Click "Launch"
+
+### 3. Multi-Window Support
+
+Each launch opens in a **new window**, so you can:
+- Run Telegram + WhatsApp side-by-side
+- Have multiple themed versions of the same app
+- Keep work/personal accounts separate
+
+## Themes
+
+| Theme | Description | Best For |
+|-------|-------------|----------|
+| **Matrix** | Green glow, dark background, monospace | Telegram, terminal-style apps |
+| **Dark** | Simple dark mode | Any app |
+| **Discord** | Discord-style gray/blue | Chat apps |
+| **Notion** | Clean white with subtle borders | Productivity apps |
+| **Gmail** | Google Material Design | Google services |
+| **Default** | Minimal, just better scrollbars | Respectful theming |
 
 ## Customization
 
-- **CSS Theme**: Edit `public/custom.css`
-- **JavaScript**: Edit `public/inject.js`
-- **Target Site**: Change URL in `public/index.html` iframe src
+### Add a New App
 
-## How It Works
+Edit `public/apps.js`:
 
-1. Express server proxies the target website (e.g., Telegram Web)
-2. Injects custom CSS/JS into the proxied HTML
-3. Serves as a PWA with offline support via service worker
-4. User installs as standalone app (no Electron/Tauri needed)
+```javascript
+{
+  id: 'slack',
+  name: 'Slack',
+  url: 'https://app.slack.com',
+  icon: '💼',
+  theme: 'dark',
+  description: 'Slack workspace'
+}
+```
 
-## Limitations
+### Create a New Theme
 
-- Some sites block being loaded in iframes (X-Frame-Options, CSP)
-- Telegram Web may detect proxying and require login again
-- Full native features (dock badges, touch bar) require actual native wrapper
+1. Create `public/themes/mytheme.css`
+2. Add your CSS (see existing themes for examples)
+3. Add to `public/apps.js` themes object:
+
+```javascript
+export const themes = {
+  // ...
+  mytheme: '/themes/mytheme.css'
+};
+```
+
+### Custom JavaScript
+
+Edit `public/inject.js` to add behavior to all apps:
+
+```javascript
+// Auto-scroll, keyboard shortcuts, etc.
+console.log('Custom JS loaded for', window.location.hostname);
+```
 
 ## Deployment
 
-Deploy to Vercel/Netlify/Cloudflare Pages for remote access:
+Deploy to any static host (Vercel, Netlify, Cloudflare Pages):
 
-```bash
-# Add your domain
-# Point to this repo
-# Access from anywhere as https://vessel.yourdomain.com
-```
+1. Push to GitHub
+2. Connect to your host
+3. Build command: `npm install`
+4. Publish directory: `public`
+5. Start command: `npm start`
+
+Access from anywhere: **https://vessel.yourdomain.com**
+
+## Limitations
+
+- Some sites block iframes/proxying (X-Frame-Options, CSP headers)
+- Login sessions may not persist across reloads for some sites
+- Full native features (dock badges, system notifications) require actual native wrappers
+
+## Use Cases
+
+- ✅ Telegram Web with Matrix theme
+- ✅ Multiple WhatsApp/Telegram accounts
+- ✅ Skinning web apps to match your aesthetic
+- ✅ Quick access to web services without browser tabs
+- ✅ Custom shortcuts and automation via inject.js
 
 ## License
 

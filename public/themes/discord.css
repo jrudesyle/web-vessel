@@ -1,0 +1,65 @@
+/* Discord-style theme */
+
+body {
+  background: #36393f !important;
+  color: #dcddde !important;
+  font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
+
+/* Sidebar */
+aside, nav, .sidebar {
+  background: #2f3136 !important;
+}
+
+/* Main content */
+main, .content {
+  background: #36393f !important;
+}
+
+/* Messages/Cards */
+.message, .card, article {
+  background: #40444b !important;
+  border-radius: 4px !important;
+  padding: 8px !important;
+}
+
+/* Input fields */
+input, textarea {
+  background: #40444b !important;
+  color: #dcddde !important;
+  border: none !important;
+  border-radius: 4px !important;
+}
+
+/* Buttons */
+button {
+  background: #5865f2 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 8px 16px !important;
+}
+
+button:hover {
+  background: #4752c4 !important;
+}
+
+/* Links */
+a {
+  color: #00b0f4 !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #202225;
+  border: 3px solid #36393f;
+  border-radius: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
