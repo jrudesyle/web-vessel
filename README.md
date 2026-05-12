@@ -1,28 +1,60 @@
 # web-vessel
 
-A lightweight web-to-native app wrapper for macOS (and Linux) with custom CSS/JS injection.
+A Progressive Web App (PWA) that wraps websites with custom CSS/JS injection.
 
-## Purpose
+## Features
 
-Wrap websites (like Telegram Web) into standalone desktop apps with:
-- Custom CSS/JS injection (persistent theming)
-- Notifications
-- Badge counts
-- Multi-site/multi-account support
-- Native dock integration
+- 🌐 Wrap any website as a standalone PWA
+- 🎨 Custom CSS injection (Matrix-style Telegram theme included)
+- ⚡ JavaScript injection support
+- 📱 Works on desktop and mobile
+- 🔒 No client installs required (just a browser)
 
-## Tech Stack
+## Quick Start
 
-- **Electron** or **Tauri** (TBD)
-- WebView-based
-- Cross-platform (macOS primary, Linux secondary)
+```bash
+cd ~/projects/web-vessel
+npm install
+npm run dev
+```
 
-## Use Cases
+Open: `http://localhost:3030`
 
-- Running Telegram Web with Matrix-style CSS theme
-- Turning any web app into a native app
-- Custom skinning and scripting for web services
+## Install as PWA
 
-## Status
+1. Visit `http://localhost:3030` in Chrome/Edge
+2. Click the install icon in the address bar
+3. You now have a standalone "app" with Matrix theme!
 
-🚧 Initial setup in progress
+## Customization
+
+- **CSS Theme**: Edit `public/custom.css`
+- **JavaScript**: Edit `public/inject.js`
+- **Target Site**: Change URL in `public/index.html` iframe src
+
+## How It Works
+
+1. Express server proxies the target website (e.g., Telegram Web)
+2. Injects custom CSS/JS into the proxied HTML
+3. Serves as a PWA with offline support via service worker
+4. User installs as standalone app (no Electron/Tauri needed)
+
+## Limitations
+
+- Some sites block being loaded in iframes (X-Frame-Options, CSP)
+- Telegram Web may detect proxying and require login again
+- Full native features (dock badges, touch bar) require actual native wrapper
+
+## Deployment
+
+Deploy to Vercel/Netlify/Cloudflare Pages for remote access:
+
+```bash
+# Add your domain
+# Point to this repo
+# Access from anywhere as https://vessel.yourdomain.com
+```
+
+## License
+
+MIT

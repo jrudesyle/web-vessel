@@ -1,0 +1,65 @@
+/* Matrix-style theme for Telegram Web */
+
+/* Override Telegram's default dark theme */
+body {
+  background: #0D0D0D !important;
+  color: #00ff00 !important;
+  font-family: 'Courier New', monospace !important;
+}
+
+/* Message bubbles */
+.message {
+  background: #1a1a1a !important;
+  border: 1px solid #00ff00 !important;
+  color: #00ff00 !important;
+}
+
+/* Sidebar */
+.sidebar, .left-column {
+  background: #0a0a0a !important;
+  border-right: 1px solid #00ff00 !important;
+}
+
+/* Chat list items */
+.chat-list .chatlist-chat {
+  background: #111 !important;
+  border-bottom: 1px solid #003300 !important;
+}
+
+.chat-list .chatlist-chat:hover {
+  background: #1a1a1a !important;
+}
+
+/* Input fields */
+input, textarea {
+  background: #0D0D0D !important;
+  color: #00ff00 !important;
+  border: 1px solid #00ff00 !important;
+}
+
+/* Buttons */
+button {
+  background: #0D0D0D !important;
+  color: #00ff00 !important;
+  border: 1px solid #00ff00 !important;
+}
+
+button:hover {
+  background: #1a1a1a !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  background: #0D0D0D;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border-radius: 4px;
+}
+
+/* Glowing text effect */
+.message-text {
+  text-shadow: 0 0 5px #00ff00;
+}

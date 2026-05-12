@@ -1,0 +1,18 @@
+{
+  "name": "web-vessel",
+  "version": "0.1.0",
+  "description": "PWA wrapper for websites with custom CSS/JS injection",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'No build needed for PWA'",
+    "start": "node server.js"
+  },
+  "keywords": ["pwa", "wrapper", "telegram", "css-injection"],
+  "author": "Jeff Rudesyle",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
